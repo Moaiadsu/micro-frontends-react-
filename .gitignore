@@ -120,7 +120,6 @@ hostApp/npm-debug.log*
 hostApp/yarn-debug.log*
 hostApp/yarn-error.log*
 hostApp/lerna-debug.log*
-hostApp/.babelrc
 hostApp/*.lock
 
 
@@ -132,7 +131,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
-.babelrc
 *.lock
 *-lock.json
 
@@ -146,7 +144,6 @@ reactHost/npm-debug.log*
 reactHost/yarn-debug.log*
 reactHost/yarn-error.log*
 reactHost/lerna-debug.log*
-reactHost/.babelrc
 reactHost/*.lock
 reactHost/*-lock.json
 
@@ -158,7 +155,6 @@ remoteLogin/npm-debug.log*
 remoteLogin/yarn-debug.log*
 remoteLogin/yarn-error.log*
 remoteLogin/lerna-debug.log*
-remoteLogin/.babelrc
 remoteLogin/*.lock
 remoteLogin/*-lock.json
 
@@ -170,7 +166,6 @@ remoteNotes/npm-debug.log*
 remoteNotes/yarn-debug.log*
 remoteNotes/yarn-error.log*
 remoteNotes/lerna-debug.log*
-remoteNotes/.babelrc
 remoteNotes/*.lock
 remoteNotes/*-lock.json
 
@@ -182,7 +177,6 @@ remoteSearch/npm-debug.log*
 remoteSearch/yarn-debug.log*
 remoteSearch/yarn-error.log*
 remoteSearch/lerna-debug.log*
-remoteSearch/.babelrc
 remoteSearch/*.lock
 remoteSearch/*-lock.json
 
@@ -195,7 +189,6 @@ remoteAppReact/npm-debug.log*
 remoteAppReact/yarn-debug.log*
 remoteAppReact/yarn-error.log*
 remoteAppReact/lerna-debug.log*
-remoteAppReact/.babelrc
 remoteAppReact/*.lock
 remoteAppReact/*-lock.json
 
@@ -208,7 +201,6 @@ reactHost/nodeApi/npm-debug.log*
 reactHost/nodeApi/yarn-debug.log*
 reactHost/nodeApi/yarn-error.log*
 reactHost/nodeApi/lerna-debug.log*
-reactHost/nodeApi/.babelrc
 reactHost/nodeApi/*.lock
 reactHost/nodeApi/*-lock.json
 

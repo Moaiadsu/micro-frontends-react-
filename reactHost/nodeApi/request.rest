@@ -25,7 +25,7 @@ POST http://localhost:1100/api/users/register
 Content-Type: application/json
 
 {
-    "name": "Messi1",
+    "name": "user1",
     "email": "pass@qwe",
     "password": "asd2"
 }
@@ -56,3 +56,37 @@ Content-Type: application/json
    "content":"content note",
    "category":"category note"
 }
+### 
+GET http://localhost:1100/api/notes/getnotes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2ViYmFkNGIxZWY0MmJkZDAxZmRlZCIsImlhdCI6MTY4MTgzMzQyMiwiZXhwIjoxNjg0NDI1NDIyfQ.HCdFhMgBSMpcn_pXhiN4WJ9qi0bZ5V6oB3CXEoMG9Ag
+
+{
+    "user":{
+        "_id": "643ebbad4b1ef42bdd01fded",
+        "email": "pass@qwe1",
+        "password": "asd123"
+    }    
+}
+
+###
+POST http://localhost:1100/api/notes/create
+Content-Type: application/json
+
+{
+   "user":
+   {
+      "_id":"643ebbad4b1ef42bdd01fded",
+      "name":"user1",
+      "email":"pass@qwe1",
+      "password":"asd123"
+   },
+    "title": "Started React JS",
+    "content": "Made my first App in React JS, feels awesome to learn something new. I aim to be a full stack dev someday",
+    "category": "Learning"
+}
+
+
+
+
+

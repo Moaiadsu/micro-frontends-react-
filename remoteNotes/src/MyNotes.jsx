@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MainScreen from "remoteLogin/MainScreen";
-import { Link } from "react-router-dom";
-import { Accordion, Badge, Button, Card } from "react-bootstrap";
-import data from "./Data";
+import { Link, useHref } from "react-router-dom";
+import { Accordion, Badge, Button } from "react-bootstrap";
+import axios from "axios";
+
 const MyNotes = () => {
+  const [notes, setNotes] = useState([]);
+  const fetechNotes = async () => {
+    const token = JSON.parse(localStorage.getItem("userInfo")).token;
+    const{data} = await axios.get("/api/notes/getnotes", {
+      data: {
+        user: JSON.parse(localStorage.getItem("userInfo"))
+      },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setNotes(data);
+  };
+
+  useEffect(() => {
+    try {
+        fetechNotes();
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+    console.log("notes 1", notes);
+  }, []);
   const deletHandler = (id) => {
     if (window.confirm("are you sure!")) {
     }
@@ -15,8 +39,8 @@ const MyNotes = () => {
           create new Note
         </Button>
       </Link>
-      {data.map((note) => (
-        <Accordion defaultActiveKey={["0"]} alwaysOpen>
+      {notes.map((note) => (
+        <Accordion key={note._id} defaultActiveKey={["0"]} alwaysOpen>
           <Accordion.Item eventKey="0">
             <Accordion.Header style={{ display: "flex" }}>
               <span

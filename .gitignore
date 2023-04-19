@@ -204,7 +204,9 @@ reactHost/nodeApi/lerna-debug.log*
 reactHost/nodeApi/*.lock
 reactHost/nodeApi/*-lock.json
 
-
+.DS_Store
+.editorconfig
+hostApp/.DS_Store
 
 
 

@@ -11,17 +11,15 @@ var reactApiRouter = require('./routes/reactApi');
 var cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const {errorHandler, notFound} = require('./middlewares/errorMiddleware');
+const { errorHandler, notFound } = require('./middlewares/errorMiddleware');
 
 var app = express();
 dotenv.config()
-console.log('URL frist', process.env.MONGO_URI);
 connectDB()
 
-
-
 app.use(cors({
-  origin: "http://localhost:8000"
+  // accept all origins
+  origin: '*', 
 }));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,13 +41,12 @@ app.use(errorHandler)
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
+app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 

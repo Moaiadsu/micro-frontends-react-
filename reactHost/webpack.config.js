@@ -14,9 +14,22 @@ module.exports = {
   devServer: {
     proxy: {
       "/api": {
-        target: "http://127.0.0.1:8000",
-        router: () => "http://127.0.0.1:1100",
-        loglevel: "debug",
+        target: {
+          host: "nginx",
+          protocol: 'http:',
+          port: 80
+        },
+        changeOrigin: true,
+        secure: false
+      },
+      "/request": {
+        target: {
+          host: "nginx",
+          protocol: 'http:',
+          port: 80
+        },
+        changeOrigin: true,
+        secure: false
       },
     },
     port: 8000,

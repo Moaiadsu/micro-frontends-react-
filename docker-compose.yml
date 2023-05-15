@@ -1,0 +1,131 @@
+version: "3.9"
+services:
+  #database
+  mongodb:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/usr/share/data/db
+    networks:
+      - network_proxy
+
+  #backend
+  nodeapi:
+    image: nodeapi
+    container_name: nodeApi
+    build: ./reactHost/nodeApi
+    ports:
+      - "1100:1100"
+    environment:
+      - docker=true #for docker
+    depends_on:
+      - mongodb
+      # - elasticsearch
+    networks:
+      - network_proxy
+
+  # frontend host forntend1
+  host:
+    image: reacthost
+    build: ./reactHost
+    container_name: reacthost
+    ports:
+      - "8000:8000"
+    depends_on:
+      - nodeapi
+      # - remotelogin
+      # - remotenotes
+      # - remotesearch
+    links:
+      - nodeapi
+      # - remotelogin
+      # - remotenotes
+      # - remotesearch
+    networks:
+      - network_proxy
+
+  #frontend remote login
+  remotelogin:
+    image: remotelogin
+    build: ./remoteLogin
+    container_name: remotelogin
+    ports:
+      - "3330:3330"
+    depends_on:
+      - nodeapi
+  #frontend remote notes
+  remotenotes:
+    image: remotenotes
+    build: ./remoteNotes
+    container_name: remotenotes
+    ports:
+      - "3220:3220"
+    depends_on:
+      - nodeapi
+  #frontend remote search
+  remotesearch:
+    image: remotesearch
+    build: ./remoteSearch
+    container_name: remotesearch
+    ports:
+      - "4400:4400"
+    depends_on:
+      - nodeapi
+
+  # frontend  rmoteAppReact
+  remoteappreact:
+    image: remoteappreact
+    build: ./rmoteAppReact
+    container_name: remtoecounter
+    ports:
+      - "3000:3000"
+    depends_on:
+      - nodeapi
+
+  # # # elastic search
+  # # elasticsearch:
+  # #   image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+  # #   container_name: elasticsearch
+  # #   environment:
+  # #     - xpack.security.enabled=false
+  # #     - discovery.type=single-node
+  # #     - "ELASTIC_USERNAME=elastic"
+  # #     - "ELASTIC_PASSWORD=s4kynnt9jc28U5Z7Fmuq"
+  # #   ports:
+  # #     - "9200:9200"
+  # #   volumes:
+  # #     - ./data:/usr/share/elasticsearch/data
+
+  # # kibana
+  # # kibana:
+  # #   image: docker.elastic.co/kibana/kibana:7.10.1
+  # #   container_name: kibana
+  # #   ports:
+  # #     - "5601:5601"
+  # #   environment:
+  # #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  # #   depends_on:
+  # #     - elasticsearch
+
+  # nginx
+  nginx:
+    image: nginx:1.17.1-alpine
+    container_name: nginx
+    build: ./
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    depends_on:
+      - nodeapi
+      - host
+    networks:
+      - network_proxy
+      
+networks:
+  network_proxy:
+    driver: bridge

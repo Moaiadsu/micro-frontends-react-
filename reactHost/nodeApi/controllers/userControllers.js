@@ -8,6 +8,8 @@ const registerUser = asyncHandler(async(req, res) =>{
     const userExists = await User.findOne({ email });
 
     console.log('USER', name, email, password);
+    console.log('this is the url user register',req.url)
+    
 
     if(userExists){
         res.status(400);

@@ -208,5 +208,8 @@ reactHost/nodeApi/*-lock.json
 .editorconfig
 hostApp/.DS_Store
 
+/data
+/esdata1
+
 
 

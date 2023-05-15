@@ -21,6 +21,7 @@ const RegisterScreen = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log("email 1", message, email);
     if (password !== confirmPassword) {
       setMessage("Password do not Match");
       console.log("email 11", message, email);
@@ -35,7 +36,7 @@ const RegisterScreen = () => {
         setLoading(true);
         const { data } = await axios.post(
           "/api/users/register",
-          { name, pic, email, password },
+          { name, email, password },
           config
         );
         setLoading(false);

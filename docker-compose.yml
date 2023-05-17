@@ -22,94 +22,102 @@ services:
       - docker=true #for docker
     depends_on:
       - mongodb
-      # - elasticsearch
+      - elasticsearch
     networks:
       - network_proxy
 
-  # frontend host forntend1
-  host:
-    image: reacthost
-    build: ./reactHost
-    container_name: reacthost
+
+  # # frontend host forntend1
+  # host:
+  #   image: reacthost
+  #   build: ./reactHost
+  #   container_name: reacthost
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - nodeapi
+  #     # - remotelogin
+  #     # - remotenotes
+  #     # - remotesearch
+  #   links:
+  #     - nodeapi
+  #     # - remotelogin
+  #     # - remotenotes
+  #     # - remotesearch
+  #   networks:
+  #     - network_proxy
+
+  # #frontend remote login
+  # remotelogin:
+  #   image: remotelogin
+  #   build: ./remoteLogin
+  #   container_name: remotelogin
+  #   ports:
+  #     - "3330:3330"
+  #   depends_on:
+  #     - nodeapi
+  # #frontend remote notes
+  # remotenotes:
+  #   image: remotenotes
+  #   build: ./remoteNotes
+  #   container_name: remotenotes
+  #   ports:
+  #     - "3220:3220"
+  #   depends_on:
+  #     - nodeapi
+  # #frontend remote search
+  # remotesearch:
+  #   image: remotesearch
+  #   build: ./remoteSearch
+  #   container_name: remotesearch
+  #   ports:
+  #     - "4400:4400"
+  #   depends_on:
+  #     - nodeapi
+
+  # # frontend  rmoteAppReact
+  # remoteappreact:
+  #   image: remoteappreact
+  #   build: ./rmoteAppReact
+  #   container_name: remtoecounter
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - nodeapi
+
+  # elastic search
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0 
+    container_name: elasticsearch
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ELASTIC_USERNAME=elastic"
+      - "ELASTIC_PASSWORD=s4kynnt9jc28U5Z7Fmuq"
     ports:
-      - "8000:8000"
-    depends_on:
-      - nodeapi
-      # - remotelogin
-      # - remotenotes
-      # - remotesearch
-    links:
-      - nodeapi
-      # - remotelogin
-      # - remotenotes
-      # - remotesearch
+      - "9200:9200"
+    volumes:
+      - ./data:/usr/share/elasticsearch/data
     networks:
       - network_proxy
 
-  #frontend remote login
-  remotelogin:
-    image: remotelogin
-    build: ./remoteLogin
-    container_name: remotelogin
-    ports:
-      - "3330:3330"
-    depends_on:
-      - nodeapi
-  #frontend remote notes
-  remotenotes:
-    image: remotenotes
-    build: ./remoteNotes
-    container_name: remotenotes
-    ports:
-      - "3220:3220"
-    depends_on:
-      - nodeapi
-  #frontend remote search
-  remotesearch:
-    image: remotesearch
-    build: ./remoteSearch
-    container_name: remotesearch
-    ports:
-      - "4400:4400"
-    depends_on:
-      - nodeapi
 
-  # frontend  rmoteAppReact
-  remoteappreact:
-    image: remoteappreact
-    build: ./rmoteAppReact
-    container_name: remtoecounter
+  #kibana
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.12.0 
+    container_name: kibana
     ports:
-      - "3000:3000"
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     depends_on:
-      - nodeapi
+      - elasticsearch
+    networks:
+      - network_proxy
 
-  # # # elastic search
-  # # elasticsearch:
-  # #   image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
-  # #   container_name: elasticsearch
-  # #   environment:
-  # #     - xpack.security.enabled=false
-  # #     - discovery.type=single-node
-  # #     - "ELASTIC_USERNAME=elastic"
-  # #     - "ELASTIC_PASSWORD=s4kynnt9jc28U5Z7Fmuq"
-  # #   ports:
-  # #     - "9200:9200"
-  # #   volumes:
-  # #     - ./data:/usr/share/elasticsearch/data
 
-  # # kibana
-  # # kibana:
-  # #   image: docker.elastic.co/kibana/kibana:7.10.1
-  # #   container_name: kibana
-  # #   ports:
-  # #     - "5601:5601"
-  # #   environment:
-  # #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-  # #   depends_on:
-  # #     - elasticsearch
-
-  # nginx
+  #nginx
   nginx:
     image: nginx:1.17.1-alpine
     container_name: nginx
@@ -122,7 +130,8 @@ services:
     restart: always
     depends_on:
       - nodeapi
-      - host
+    
+    #   # - host
     networks:
       - network_proxy
       

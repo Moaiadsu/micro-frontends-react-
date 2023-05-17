@@ -6,7 +6,6 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^8.7.0",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
@@ -20,9 +19,12 @@
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.3",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "ping": "^0.4.4"
   },
   "devDependencies": {
+    "@elastic/elasticsearch": "^8.7.0",
+    "axios": "^1.4.0",
     "nodemon": "^2.0.22"
   }
 }
